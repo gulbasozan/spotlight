@@ -2,39 +2,44 @@ import { Plus } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { useTasks } from "../contexts/Tasks";
 
-const AddTask = () => {
+const AddTask = ({ taskPriority }: { taskPriority: number }) => {
     const [openDialouge, setOpenDialouge] = useState(false);
 
-    const handleClick = (e:any) => {
+    const handleClick = (e: any) => {
         e.preventDefault();
 
         setOpenDialouge(true);
     };
 
     return (
-        <>
+        <div className="pl-2 ml-2">
             {openDialouge ? (
-                <AddTaskDialouge setOpenDialouge={setOpenDialouge} />
+                <AddTaskDialouge
+                    setOpenDialouge={setOpenDialouge}
+                    taskPriority={taskPriority}
+                />
             ) : (
                 <div onClick={handleClick}>
                     <p>+ Add Task</p>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 
 const AddTaskDialouge = ({
     setOpenDialouge,
+    taskPriority,
 }: {
     setOpenDialouge: Dispatch<SetStateAction<boolean>>;
+    taskPriority: number;
 }) => {
     const [taskName, setTaskName] = useState("");
 
     const { setTask } = useTasks();
 
     const handleClick = () => {
-        setTask(taskName, taskName);
+        setTask(taskName, taskName, taskPriority);
         setOpenDialouge(false);
     };
 

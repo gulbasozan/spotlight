@@ -3,6 +3,7 @@ declare interface Task {
     text: string;
     subtasks: Subtask[] | never[];
     taskContexts: TaskContext[] | never[];
+    priority: number;
 }
 
 declare interface Subtask {
