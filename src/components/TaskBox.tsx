@@ -2,6 +2,7 @@ import { Circle } from "lucide-react";
 
 import SubtaskBox from "./SubTaskBox";
 import AddTask from "./AddTask";
+import AddSubtask from "./AddSubtask";
 
 const TaskBox = ({ task }: { task: Task }) => {
     return (
@@ -12,7 +13,13 @@ const TaskBox = ({ task }: { task: Task }) => {
                     <h1 className="font-bold text-2xl">{`${task.text} (${task.priority})`}</h1>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <SubtaskBox />
+                    {task.subtasks.length > 0 ? (
+                        task.subtasks.map((subtask: Subtask) => (
+                            <SubtaskBox key={subtask.ID} subtask={subtask} taskID={task.ID} />
+                        ))
+                    ) : (
+                        <AddSubtask taskID={task.ID} />
+                    )}
                 </div>
             </div>
             <AddTask taskPriority={task.priority} />

@@ -38,7 +38,6 @@ const TasksProvider = ({ children }: { children: ReactNode }) => {
                 });
 
             let updatedTasks = updatePriorities(prev, priority);
-
             updatedTasks = [
                 ...updatedTasks,
                 { ID: value, text: value, priority, subtasks: [], taskContexts: [] },
@@ -49,7 +48,34 @@ const TasksProvider = ({ children }: { children: ReactNode }) => {
     };
 
     //TBI
-    const setSubtask = () => { };
+    const setSubtask = (taskID: string, input: string, subtaskID: string) => {
+        if (input === "") return;
+
+        return setTasks((prev: Task[] | null) => {
+            if (!prev) return null;
+
+            let task = prev.find(({ ID }) => ID === taskID);
+
+            if (!task?.subtasks) return null;
+            let subtasks = task.subtasks;
+            const taskIndex = prev.findIndex(({ ID }) => ID === taskID);
+
+            if (!subtasks.length) subtasks = [{ ID: subtaskID, text: input }];
+
+            if (subtasks.some(({ ID }) => ID === subtaskID))
+                subtasks = subtasks.map((subtask) => {
+                    if (subtask.ID === subtaskID) return { ...subtask, text: input };
+                    return subtask;
+                });
+            else {
+                subtasks = [...subtasks, { ID: subtaskID, text: input }];
+            }
+
+            task = { ...task, subtasks };
+
+            return prev.toSpliced(taskIndex, 1, task);
+        });
+    };
     const setTaskContext = () => { };
 
     return (
