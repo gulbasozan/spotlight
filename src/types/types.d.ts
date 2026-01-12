@@ -9,11 +9,13 @@ declare interface Task {
 declare interface Subtask {
     ID: string;
     text: string;
+    taskID: string;
 }
 
 declare interface TaskContext {
     ID: string;
     text: string;
+    subtaskID: string;
 }
 
 declare interface TasksReactContext {

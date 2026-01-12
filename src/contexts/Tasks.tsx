@@ -56,11 +56,11 @@ const TasksProvider = ({ children }: { children: ReactNode }) => {
 
             let task = prev.find(({ ID }) => ID === taskID);
 
-            if (!task?.subtasks) return null;
+            if (!task?.subtasks) return prev;
             let subtasks = task.subtasks;
             const taskIndex = prev.findIndex(({ ID }) => ID === taskID);
 
-            if (!subtasks.length) subtasks = [{ ID: subtaskID, text: input }];
+            if (!subtasks.length) subtasks = [{ ID: subtaskID, text: input, taskID }];
 
             if (subtasks.some(({ ID }) => ID === subtaskID))
                 subtasks = subtasks.map((subtask) => {
@@ -68,7 +68,7 @@ const TasksProvider = ({ children }: { children: ReactNode }) => {
                     return subtask;
                 });
             else {
-                subtasks = [...subtasks, { ID: subtaskID, text: input }];
+                subtasks = [...subtasks, { ID: subtaskID, text: input, taskID }];
             }
 
             task = { ...task, subtasks };
@@ -76,7 +76,43 @@ const TasksProvider = ({ children }: { children: ReactNode }) => {
             return prev.toSpliced(taskIndex, 1, task);
         });
     };
-    const setTaskContext = () => { };
+    const setTaskContext = (
+        input: string,
+        taskContextID: string,
+        taskID: string,
+        subtaskID: string,
+    ) => {
+        if (input === "") return;
+
+        return setTasks((prev: Task[] | null) => {
+            if (!prev) return null;
+            let task = prev.find(({ ID }) => ID === taskID);
+
+            if (!task?.taskContexts) return prev;
+            let taskContexts = task.taskContexts;
+            const taskIndex = prev.findIndex(({ ID }) => ID === taskID);
+
+            if (!taskContexts.length)
+                taskContexts = [{ ID: taskContextID, text: input, subtaskID }];
+
+            if (taskContexts.some(({ ID }) => ID === taskContextID))
+                taskContexts = taskContexts.map((taskContext) => {
+                    if (taskContext.ID === taskContextID)
+                        return { ...taskContext, text: input };
+                    return taskContext;
+                });
+            else {
+                taskContexts = [
+                    ...taskContexts,
+                    { ID: taskContextID, text: input, subtaskID },
+                ];
+            }
+
+            task = { ...task, taskContexts };
+
+            return prev.toSpliced(taskIndex, 1, task);
+        });
+    };
 
     return (
         <TasksContext.Provider

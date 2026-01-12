@@ -5,6 +5,7 @@ import AddTask from "./AddTask";
 import AddSubtask from "./AddSubtask";
 
 const TaskBox = ({ task }: { task: Task }) => {
+    console.log(task);
     return (
         <div className="flex flex-col items-start justify-center w-full">
             <div className="m-2 p-2 w-full">
@@ -13,13 +14,16 @@ const TaskBox = ({ task }: { task: Task }) => {
                     <h1 className="font-bold text-2xl">{`${task.text} (${task.priority})`}</h1>
                 </div>
                 <div className="flex flex-col gap-2">
-                    {task.subtasks.length > 0 ? (
+                    {task.subtasks.length > 0 &&
                         task.subtasks.map((subtask: Subtask) => (
-                            <SubtaskBox key={subtask.ID} subtask={subtask} taskID={task.ID} />
-                        ))
-                    ) : (
-                        <AddSubtask taskID={task.ID} />
-                    )}
+                            <SubtaskBox
+                                key={subtask.ID}
+                                subtask={subtask}
+                                taskID={task.ID}
+                                taskContexts={task.taskContexts}
+                            />
+                        ))}
+                    <AddSubtask taskID={task.ID} />
                 </div>
             </div>
             <AddTask taskPriority={task.priority} />
