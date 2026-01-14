@@ -5,7 +5,6 @@ import AddTask from "./AddTask";
 import AddSubtask from "./AddSubtask";
 
 const TaskBox = ({ task }: { task: Task }) => {
-    console.log(task);
     return (
         <div className="flex flex-col items-start justify-center w-full">
             <div className="m-2 p-2 w-full">
