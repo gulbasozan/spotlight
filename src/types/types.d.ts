@@ -1,21 +1,24 @@
 declare interface Task {
-    ID: string;
+    id: string;
+    created_at: date;
     text: string;
     subtasks: Subtask[] | never[];
-    taskContexts: TaskContext[] | never[];
     priority: number;
 }
 
 declare interface Subtask {
-    ID: string;
+    id: string;
+    created_at: date;
     text: string;
-    taskID: string;
+    task_id: string;
+    task_contexts: TaskContext[] | never[];
 }
 
 declare interface TaskContext {
-    ID: string;
+    id: string;
+    created_at: date;
     text: string;
-    subtaskID: string;
+    subtask_id: string;
 }
 
 declare interface TasksReactContext {

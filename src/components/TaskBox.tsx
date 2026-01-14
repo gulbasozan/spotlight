@@ -16,13 +16,12 @@ const TaskBox = ({ task }: { task: Task }) => {
                     {task.subtasks.length > 0 &&
                         task.subtasks.map((subtask: Subtask) => (
                             <SubtaskBox
-                                key={subtask.ID}
+                                key={subtask.id}
                                 subtask={subtask}
-                                taskID={task.ID}
-                                taskContexts={task.taskContexts}
+                                taskID={task.id}
                             />
                         ))}
-                    <AddSubtask taskID={task.ID} />
+                    <AddSubtask taskID={task.id} />
                 </div>
             </div>
             <AddTask taskPriority={task.priority} />
