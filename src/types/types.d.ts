@@ -27,3 +27,11 @@ declare interface TasksReactContext {
     setSubtask: Dispatch<Subtask> | null;
     setTaskContext: Dispatch<TaskContext> | null;
 }
+
+declare interface TasksContextType {
+    tasks: Task[];
+    loading: boolean;
+    error: string | null;
+    fetchTasks: () => Promise<void>;
+}
+

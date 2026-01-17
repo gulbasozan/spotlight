@@ -1,7 +1,8 @@
 import "./index.css";
 
 import Home from "./Home.tsx";
-import TasksProvider from "./contexts/Tasks.tsx";
+import TasksProvider from "./contexts/TasksProvider.tsx";
+// import TasksProvider from "./contexts/Tasks.tsx";
 
 function App() {
     return (
