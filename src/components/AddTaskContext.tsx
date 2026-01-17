@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { useTasks } from "../contexts/Tasks";
+import { useTasksAPI } from "../contexts/TasksProvider";
+import { addTaskContext } from "../api/add_task_context";
 
 const AddTaskContext = ({
     taskID,
@@ -44,10 +45,11 @@ const AddTaskContextDialouge = ({
     subtaskID: string;
 }) => {
     const [taskContextName, setTaskContextName] = useState("");
-    const { setTaskContext } = useTasks();
+
+    const { fetchTasks } = useTasksAPI();
 
     const handleClick = () => {
-        setTaskContext(taskContextName, taskContextName, taskID, subtaskID);
+        addTaskContext(taskContextName, subtaskID).then(() => fetchTasks()).catch(e => console.log(e))
         setOpenDialouge(false);
     };
     return (
