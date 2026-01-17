@@ -2,7 +2,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 import { Plus } from "lucide-react";
 
-import { useTasks } from "../contexts/Tasks";
+import { useTasksAPI } from "../contexts/TasksProvider";
+import { addSubtask } from "../api/add_subtask";
 
 const AddSubtask = ({ taskID }: { taskID: string }) => {
     const [openDialouge, setOpenDialouge] = useState(false);
@@ -34,10 +35,10 @@ const AddSubtaskDialouge = ({
 }) => {
     const [subtaskName, setSubtaskName] = useState("");
 
-    const { setSubtask } = useTasks();
+    const { fetchTasks } = useTasksAPI();
 
     const handleClick = () => {
-        setSubtask(taskID, subtaskName, subtaskName);
+        addSubtask(subtaskName, taskID).then(() => fetchTasks()).catch(e => console.log(e))
         setOpenDialouge(false);
     };
     return (

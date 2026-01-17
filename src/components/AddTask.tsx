@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { addTask } from "../api/insert_task";
+import { addTask } from "../api/add_task";
 import { useTasksAPI } from "../contexts/TasksProvider";
 
 const AddTask = ({ taskPriority }: { taskPriority: number }) => {
