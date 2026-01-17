@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { useTasks } from "../contexts/Tasks";
+import { addTask } from "../api/insert_task";
+import { useTasksAPI } from "../contexts/TasksProvider";
 
 const AddTask = ({ taskPriority }: { taskPriority: number }) => {
     const [openDialouge, setOpenDialouge] = useState(false);
@@ -36,10 +37,10 @@ const AddTaskDialouge = ({
 }) => {
     const [taskName, setTaskName] = useState("");
 
-    const { setTask } = useTasks();
+    const { fetchTasks } = useTasksAPI();
 
     const handleClick = () => {
-        setTask(taskName, taskName, taskPriority);
+        addTask(taskName, taskPriority).then(() => fetchTasks()).catch(e => console.log(e))
         setOpenDialouge(false);
     };
 
