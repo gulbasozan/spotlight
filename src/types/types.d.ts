@@ -35,3 +35,12 @@ declare interface TasksContextType {
     fetchTasks: () => Promise<void>;
 }
 
+declare interface UserCredentials {
+    username: string;
+    password: string;
+}
+
+declare interface SessionContext_T {
+    session: Session | null;
+    setSession: Dispatch<Session>;
+}

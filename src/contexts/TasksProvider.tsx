@@ -1,13 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { getTasks } from "../api/get_tasks";
 
-interface TasksContextType {
-    tasks: Task[];
-    loading: boolean;
-    error: string | null;
-    fetchTasks: () => Promise<void>;
-}
-
 const TasksContext = createContext<TasksContextType | undefined>(undefined);
 
 const TasksProvider = ({ children }: { children: ReactNode }) => {

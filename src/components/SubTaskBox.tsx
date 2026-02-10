@@ -24,7 +24,7 @@ const SubtaskBox = ({
         }).then(() => fetchTasks()).catch(e => console.log(e))
     }
     return (
-        <div className="ml-2 p-2">
+        <div className="ml-2 mr-2 p-2">
             <div className="flex flex-row justify-between items-center">
                 <div className="flex flex-row gap-2 items-center justify-start">
                     <Minus size={20} />
