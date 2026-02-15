@@ -1,4 +1,4 @@
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { supabase } from "../api/supabase";
 import { useSession } from "../contexts/SessionProvider";
 import { useEffect } from "react";

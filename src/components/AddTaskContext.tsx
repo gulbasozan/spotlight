@@ -37,7 +37,6 @@ const AddTaskContext = ({
 
 const AddTaskContextDialouge = ({
     setOpenDialouge,
-    taskID,
     subtaskID,
 }: {
     setOpenDialouge: Dispatch<SetStateAction<boolean>>;
@@ -49,7 +48,9 @@ const AddTaskContextDialouge = ({
     const { fetchTasks } = useTasksAPI();
 
     const handleClick = () => {
-        addTaskContext(taskContextName, subtaskID).then(() => fetchTasks()).catch(e => console.log(e))
+        addTaskContext(taskContextName, subtaskID)
+            .then(() => fetchTasks())
+            .catch((e) => console.log(e));
         setOpenDialouge(false);
     };
     return (

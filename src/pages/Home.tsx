@@ -3,7 +3,6 @@ import AddTask from "../components/AddTask";
 import TaskBox from "../components/TaskBox";
 import { useSession } from "../contexts/SessionProvider";
 import { useTasksAPI } from "../contexts/TasksProvider";
-import { redirect } from "react-router";
 import { useNavigate } from "react-router";
 
 const Home = () => {

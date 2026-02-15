@@ -30,6 +30,14 @@ const SessionProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-export const useSession = () => useContext(SessionContext);
+export const useSession = () => {
+    const context = useContext(SessionContext);
+
+    // just to get by from ts linter error
+    if (context === undefined)
+        throw new Error("useSessionAPI must be used within TasksProvider");
+
+    return context;
+};
 
 export default SessionProvider;

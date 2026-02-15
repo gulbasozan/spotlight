@@ -1,8 +1,6 @@
 import { Minus } from "lucide-react";
 
 import TaskContextBox from "./TaskContextBox.tsx";
-import { useState } from "react";
-import AddSubtask from "./AddSubtask.tsx";
 import AddTaskContext from "./AddTaskContext.tsx";
 import DeleteButton from "./DeleteButton.tsx";
 
@@ -19,10 +17,13 @@ const SubtaskBox = ({
     const { fetchTasks } = useTasksAPI();
 
     const handleDelete = () => {
-        deleteSubtask(subtask.id).then((res) => {
-            if (res.error) throw res.error;
-        }).then(() => fetchTasks()).catch(e => console.log(e))
-    }
+        deleteSubtask(subtask.id)
+            .then((res) => {
+                if (res.error) throw res.error;
+            })
+            .then(() => fetchTasks())
+            .catch((e) => console.log(e));
+    };
     return (
         <div className="ml-2 mr-2 p-2">
             <div className="flex flex-row justify-between items-center">

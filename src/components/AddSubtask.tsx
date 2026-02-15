@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 
 import { Plus } from "lucide-react";
 
@@ -16,7 +16,10 @@ const AddSubtask = ({ taskID }: { taskID: string }) => {
     return (
         <div className="pl-2 ml-2">
             {openDialouge ? (
-                <AddSubtaskDialouge setOpenDialouge={setOpenDialouge} taskID={taskID} />
+                <AddSubtaskDialouge
+                    setOpenDialouge={setOpenDialouge}
+                    taskID={taskID}
+                />
             ) : (
                 <div onClick={handleClick}>
                     <p>+ Add Subtask</p>
@@ -38,7 +41,9 @@ const AddSubtaskDialouge = ({
     const { fetchTasks } = useTasksAPI();
 
     const handleClick = () => {
-        addSubtask(subtaskName, taskID).then(() => fetchTasks()).catch(e => console.log(e))
+        addSubtask(subtaskName, taskID)
+            .then(() => fetchTasks())
+            .catch((e) => console.log(e));
         setOpenDialouge(false);
     };
     return (
