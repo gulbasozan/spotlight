@@ -63,10 +63,8 @@ const TaskBox = ({ task }: { task: Task }) => {
                                     taskID={task.id}
                                 />
                             ))}
-                        <AddSubtask taskID={task.id} />
                     </div>
                 </div>
-                <AddTask taskPriority={task.priority} />
             </div>
         </DropdownMenu>
     );
