@@ -1,60 +1,65 @@
-import { Plus } from "lucide-react";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
 import { addTask } from "../api/add_task";
 import { useTasksAPI } from "../contexts/TasksProvider";
+import {
+    DialogClose,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "./ui/dialog";
+import { Field } from "./ui/field";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
-const AddTask = ({ taskPriority }: { taskPriority: number }) => {
-    const [openDialouge, setOpenDialouge] = useState(false);
-
-    const handleClick = (e: any) => {
-        e.preventDefault();
-
-        setOpenDialouge(true);
-    };
-
-    return (
-        <div className="pl-2 ml-2">
-            {openDialouge ? (
-                <AddTaskDialouge
-                    setOpenDialouge={setOpenDialouge}
-                    taskPriority={taskPriority}
-                />
-            ) : (
-                <div onClick={handleClick}>
-                    <p>+ Add Task</p>
-                </div>
-            )}
-        </div>
-    );
-};
-
-const AddTaskDialouge = ({
-    setOpenDialouge,
-    taskPriority,
-}: {
-    setOpenDialouge: Dispatch<SetStateAction<boolean>>;
-    taskPriority: number;
-}) => {
-    const [taskName, setTaskName] = useState("");
+const AddTaskDialog = ({ taskPriority }: { taskPriority: number }) => {
+    const [buttonDisabled, setButtonDisabled] = useState(true);
 
     const { fetchTasks } = useTasksAPI();
 
-    const handleClick = () => {
-        addTask(taskName, taskPriority).then(() => fetchTasks()).catch(e => console.log(e))
-        setOpenDialouge(false);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (e.target.taskName.value === "") return;
+
+        addTask(e.target.taskName.value, taskPriority)
+            .then(() => fetchTasks())
+            .catch((e) => console.log(e));
     };
 
     return (
-        <div className="flex flex-row items-center justify-start gap-2">
-            <input
-                placeholder="Enter task name"
-                onChange={(e) => setTaskName(e.target.value)}
-            />
-            <div className="bg-blue-300 rounded-md p-1" onClick={handleClick}>
-                <Plus size={20} color="white" />
-            </div>
-        </div>
+        <DialogContent>
+            <DialogTitle>
+                <DialogHeader>Add a task</DialogHeader>
+            </DialogTitle>
+            <form onSubmit={handleSubmit}>
+                <Field>
+                    <Label htmlFor="task-name">Task Name</Label>
+                    <Input
+                        id="taskName"
+                        name="taskName"
+                        onFocus={(e) =>
+                            e.target.value === "" && setButtonDisabled(true)
+                        }
+                        onChange={(e) =>
+                            e.target.value !== ""
+                                ? setButtonDisabled(false)
+                                : setButtonDisabled(true)
+                        }
+                    />
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button variant="outline">Cancel</Button>
+                        </DialogClose>
+                        <Button type="submit" disabled={buttonDisabled}>
+                            Add Task
+                        </Button>
+                    </DialogFooter>
+                </Field>
+            </form>
+        </DialogContent>
     );
 };
 
-export default AddTask;
+export default AddTaskDialog;

@@ -13,6 +13,30 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "./ui/dialog";
+import { Label } from "./ui/label";
+import { Field } from "./ui/field";
+import { Input } from "./ui/input";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "./ui/alert-dialog";
+import AddTaskDialog from "./AddTask";
+import AddSubtaskDialog from "./AddSubtask";
 
 const TaskBox = ({ task }: { task: Task }) => {
     const { fetchTasks } = useTasksAPI();
@@ -41,18 +65,83 @@ const TaskBox = ({ task }: { task: Task }) => {
                         </DropdownMenuTrigger>
                     </div>
                     <DropdownMenuContent>
-                        <DropdownMenuItem>
-                            <SquarePlus /> Task
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <CopyPlus /> Task Context
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                            variant="destructive"
-                            onClick={handleDelete}
-                        >
-                            <SquareMinus /> Delete Task
-                        </DropdownMenuItem>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <DropdownMenuItem
+                                    onSelect={(e) => e.preventDefault()}
+                                >
+                                    <SquarePlus /> Task
+                                </DropdownMenuItem>
+                            </DialogTrigger>
+                            <AddTaskDialog taskPriority={1} />
+                        </Dialog>
+
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <DropdownMenuItem
+                                    onSelect={(e) => e.preventDefault()}
+                                >
+                                    <SquarePlus /> Subtask
+                                </DropdownMenuItem>
+                            </DialogTrigger>
+                            <AddSubtaskDialog taskID={task.id} />
+                        </Dialog>
+
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <DropdownMenuItem
+                                    onSelect={(e) => e.preventDefault()}
+                                >
+                                    <CopyPlus /> Task Context
+                                </DropdownMenuItem>
+                            </DialogTrigger>
+
+                            <DialogContent showCloseButton={false}>
+                                <DialogHeader>
+                                    <DialogTitle>
+                                        Add a task context
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                        Adding task context is not available
+                                        right now, sorry for the inconvenience,
+                                        sir.
+                                    </DialogDescription>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
+
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <DropdownMenuItem
+                                    variant="destructive"
+                                    onSelect={(e) => e.preventDefault()}
+                                >
+                                    <SquareMinus /> Delete Task
+                                </DropdownMenuItem>
+                            </AlertDialogTrigger>
+
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                        Are you absolutely sure?
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action can be undone BUT, you know
+                                        better than me what a pain in the assto
+                                        do so. Please think twice, cut once,
+                                        sir.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel variant="outline">
+                                        Cancel
+                                    </AlertDialogCancel>
+                                    <AlertDialogAction onClick={handleDelete}>
+                                        Delete
+                                    </AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </DropdownMenuContent>
                     <div className="flex flex-col gap-2">
                         {task.subtasks.length > 0 &&

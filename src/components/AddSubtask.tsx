@@ -1,62 +1,66 @@
-import { type Dispatch, type SetStateAction, useState } from "react";
-
-import { Plus } from "lucide-react";
+import { useState } from "react";
 
 import { useTasksAPI } from "../contexts/TasksProvider";
 import { addSubtask } from "../api/add_subtask";
+import {
+    DialogClose,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "./ui/dialog";
+import { Field } from "./ui/field";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 
-const AddSubtask = ({ taskID }: { taskID: string }) => {
-    const [openDialouge, setOpenDialouge] = useState(false);
-    const handleClick = (e: any) => {
-        e.preventDefault();
-
-        setOpenDialouge(true);
-    };
-
-    return (
-        <div className="pl-2 ml-2">
-            {openDialouge ? (
-                <AddSubtaskDialouge
-                    setOpenDialouge={setOpenDialouge}
-                    taskID={taskID}
-                />
-            ) : (
-                <div onClick={handleClick}>
-                    <p>+ Add Subtask</p>
-                </div>
-            )}
-        </div>
-    );
-};
-
-const AddSubtaskDialouge = ({
-    setOpenDialouge,
-    taskID,
-}: {
-    setOpenDialouge: Dispatch<SetStateAction<boolean>>;
-    taskID: string;
-}) => {
-    const [subtaskName, setSubtaskName] = useState("");
+const AddSubtaskDialog = ({ taskID }: { taskID: string }) => {
+    const [buttonDisabled, setButtonDisabled] = useState(true);
 
     const { fetchTasks } = useTasksAPI();
 
-    const handleClick = () => {
-        addSubtask(subtaskName, taskID)
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (e.target.subtaskName.value === "") return;
+
+        addSubtask(e.target.subtaskName.value, taskID)
             .then(() => fetchTasks())
             .catch((e) => console.log(e));
-        setOpenDialouge(false);
     };
+
     return (
-        <div className="flex flex-row items-center justify-start gap-2">
-            <input
-                placeholder="Enter subtask"
-                onChange={(e) => setSubtaskName(e.target.value)}
-            />
-            <div className="bg-blue-300 rounded-md p-1" onClick={handleClick}>
-                <Plus size={20} color="white" />
-            </div>
-        </div>
+        <DialogContent>
+            <DialogTitle>
+                <DialogHeader>Add a subtask</DialogHeader>
+            </DialogTitle>
+            <form onSubmit={handleSubmit}>
+                <Field>
+                    <Label htmlFor="task-name">Subtask Name</Label>
+                    <Input
+                        id="subtaskName"
+                        name="subtaskName"
+                        onFocus={(e) =>
+                            e.target.value === "" && setButtonDisabled(true)
+                        }
+                        onChange={(e) =>
+                            e.target.value !== ""
+                                ? setButtonDisabled(false)
+                                : setButtonDisabled(true)
+                        }
+                    />
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button variant="outline">Cancel</Button>
+                        </DialogClose>
+                        <Button type="submit" disabled={buttonDisabled}>
+                            Add Subtask
+                        </Button>
+                    </DialogFooter>
+                </Field>
+            </form>
+        </DialogContent>
     );
 };
 
-export default AddSubtask;
+export default AddSubtaskDialog;

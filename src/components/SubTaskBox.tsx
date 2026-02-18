@@ -12,6 +12,19 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu.tsx";
+import { Dialog, DialogTrigger } from "./ui/dialog.tsx";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "./ui/alert-dialog.tsx";
+import AddTaskContextDialog from "./AddTaskContext.tsx";
 
 const SubtaskBox = ({
     subtask,
@@ -44,18 +57,51 @@ const SubtaskBox = ({
                     </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                    <DropdownMenuItem>
-                        <SquarePlus /> Subtask
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        <CopyPlus /> Subtask Context
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                        variant="destructive"
-                        onClick={handleDelete}
-                    >
-                        <SquareMinus /> Delete Task
-                    </DropdownMenuItem>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <DropdownMenuItem
+                                onSelect={(e) => e.preventDefault()}
+                            >
+                                <CopyPlus /> Subtask Context
+                            </DropdownMenuItem>
+                        </DialogTrigger>
+                        <AddTaskContextDialog
+                            taskID={subtask.task_id}
+                            subtaskID={subtask.id}
+                        />
+                    </Dialog>
+
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <DropdownMenuItem
+                                variant="destructive"
+                                onSelect={(e) => e.preventDefault()}
+                            >
+                                <SquareMinus /> Delete Subtask
+                            </DropdownMenuItem>
+                        </AlertDialogTrigger>
+
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                    Are you absolutely sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    This action can be undone BUT, you know
+                                    better than me what a pain in the assto do
+                                    so. Please think twice, cut once, sir.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel variant="outline">
+                                    Cancel
+                                </AlertDialogCancel>
+                                <AlertDialogAction onClick={handleDelete}>
+                                    Delete
+                                </AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
                 </DropdownMenuContent>
                 <div className="flex flex-col gap-2 ml-2 p-2">
                     {subtask.task_contexts.length > 0 &&
