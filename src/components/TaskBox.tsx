@@ -1,9 +1,6 @@
 import { Circle, CopyPlus, SquareMinus, SquarePlus } from "lucide-react";
 
 import SubtaskBox from "./SubTaskBox";
-import AddTask from "./AddTask";
-import AddSubtask from "./AddSubtask";
-import DeleteButton from "./DeleteButton";
 import { deleteTask } from "../api/delete_task";
 import { useTasksAPI } from "../contexts/TasksProvider";
 
@@ -21,9 +18,6 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "./ui/dialog";
-import { Label } from "./ui/label";
-import { Field } from "./ui/field";
-import { Input } from "./ui/input";
 import {
     AlertDialog,
     AlertDialogAction,

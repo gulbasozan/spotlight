@@ -18,7 +18,7 @@ const AddTaskDialog = ({ taskPriority }: { taskPriority: number }) => {
 
     const { fetchTasks } = useTasksAPI();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
 
         if (e.target.taskName.value === "") return;

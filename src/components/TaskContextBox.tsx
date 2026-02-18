@@ -1,7 +1,6 @@
 import { CornerDownRight, SquareMinus } from "lucide-react";
 import { deleteTaskContext } from "../api/delete_task_context";
 import { useTasksAPI } from "../contexts/TasksProvider";
-import DeleteButton from "./DeleteButton";
 import {
     DropdownMenu,
     DropdownMenuContent,

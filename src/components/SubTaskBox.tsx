@@ -1,8 +1,6 @@
-import { CopyPlus, Minus, SquareMinus, SquarePlus } from "lucide-react";
+import { CopyPlus, Minus, SquareMinus } from "lucide-react";
 
 import TaskContextBox from "./TaskContextBox.tsx";
-import AddTaskContext from "./AddTaskContext.tsx";
-import DeleteButton from "./DeleteButton.tsx";
 
 import { useTasksAPI } from "../contexts/TasksProvider.tsx";
 import { deleteSubtask } from "../api/delete_subtask.ts";

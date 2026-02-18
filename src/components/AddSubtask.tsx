@@ -19,7 +19,7 @@ const AddSubtaskDialog = ({ taskID }: { taskID: string }) => {
 
     const { fetchTasks } = useTasksAPI();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
 
         if (e.target.subtaskName.value === "") return;

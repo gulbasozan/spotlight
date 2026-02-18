@@ -1,5 +1,4 @@
-import { Plus } from "lucide-react";
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
 import { useTasksAPI } from "../contexts/TasksProvider";
 import { addTaskContext } from "../api/add_task_context";
 import {
@@ -15,7 +14,6 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
 const AddTaskContextDialog = ({
-    taskID,
     subtaskID,
 }: {
     taskID: string;
@@ -25,7 +23,7 @@ const AddTaskContextDialog = ({
 
     const { fetchTasks } = useTasksAPI();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
 
         if (e.target.taskContext.value === "") return;
@@ -66,34 +64,6 @@ const AddTaskContextDialog = ({
                 </Field>
             </form>
         </DialogContent>
-    );
-};
-
-const AddTaskContextDialouge = ({
-    setOpenDialouge,
-    subtaskID,
-}: {
-    setOpenDialouge: Dispatch<SetStateAction<boolean>>;
-    taskID: string;
-    subtaskID: string;
-}) => {
-    const [taskContextName, setTaskContextName] = useState("");
-
-    const { fetchTasks } = useTasksAPI();
-
-    const handleClick = () => {
-        setOpenDialouge(false);
-    };
-    return (
-        <div className="flex flex-row items-center justify-start gap-2">
-            <input
-                placeholder="Enter task context"
-                onChange={(e) => setTaskContextName(e.target.value)}
-            />
-            <div className="bg-blue-300 rounded-md p-1" onClick={handleClick}>
-                <Plus size={20} color="white" />
-            </div>
-        </div>
     );
 };
 
