@@ -1,8 +1,10 @@
 import { supabase } from "./supabase";
 
 export const getTasks = async () => {
-    return await supabase.from("tasks").select(
-        `id,
+    return await supabase
+        .from("tasks")
+        .select(
+            `id,
         created_at,
         text,
         priority,
@@ -19,5 +21,6 @@ export const getTasks = async () => {
             )
         )
     `,
-    );
+        )
+        .order("priority", { ascending: false });
 };

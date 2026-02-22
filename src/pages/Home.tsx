@@ -22,7 +22,9 @@ const Home = () => {
     ) : !error ? (
         <div className="flex w-full max-w-3xl p-5 flex-col justify-center items-center">
             {tasks.length > 0 ? (
-                tasks.map((task) => <TaskBox key={task.id} task={task} />)
+                tasks.map((task, index) => (
+                    <TaskBox key={task.id} index={index} task={task} />
+                ))
             ) : (
                 <Dialog>
                     <div className="flex flex-col items-center justify-center gap-4">
@@ -32,7 +34,7 @@ const Home = () => {
                                 <h2>Add a Task</h2>
                             </Button>
                         </DialogTrigger>
-                        <AddTaskDialog taskPriority={1} />
+                        <AddTaskDialog index={0} />
                     </div>
                 </Dialog>
             )}

@@ -12,18 +12,35 @@ import { Field } from "./ui/field";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { getPriorityNumber } from "@/lib/utils";
 
-const AddTaskDialog = ({ taskPriority }: { taskPriority: number }) => {
+const AddTaskDialog = ({
+    taskPriority,
+    index,
+}: {
+    taskPriority?: number;
+    index: number;
+}) => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
 
-    const { fetchTasks } = useTasksAPI();
+    const { fetchTasks, tasks } = useTasksAPI();
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
 
         if (e.target.taskName.value === "") return;
 
-        addTask(e.target.taskName.value, taskPriority)
+        // get upper (taskPriority) and lower tasks for priority boundaries
+        // lower priority has higher index bc order is ascending in priority
+        const lowerTask = tasks.length > 1 ? tasks.at(index + 1) : null; // thus index+1
+        console.log("LOWER TASK", lowerTask);
+        const newTaskPriority = getPriorityNumber(
+            taskPriority,
+            lowerTask?.priority,
+        );
+        console.log("TASK PRIORITY", newTaskPriority);
+
+        addTask(e.target.taskName.value, newTaskPriority)
             .then(() => fetchTasks())
             .catch((e) => console.log(e));
     };

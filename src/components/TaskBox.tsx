@@ -32,7 +32,7 @@ import {
 import AddTaskDialog from "./AddTask";
 import AddSubtaskDialog from "./AddSubtask";
 
-const TaskBox = ({ task }: { task: Task }) => {
+const TaskBox = ({ task, index }: { task: Task; index: number }) => {
     const { fetchTasks } = useTasksAPI();
 
     const handleDelete = () => {
@@ -67,7 +67,10 @@ const TaskBox = ({ task }: { task: Task }) => {
                                     <SquarePlus /> Task
                                 </DropdownMenuItem>
                             </DialogTrigger>
-                            <AddTaskDialog taskPriority={1} />
+                            <AddTaskDialog
+                                taskPriority={task.priority}
+                                index={index}
+                            />
                         </Dialog>
 
                         <Dialog>
