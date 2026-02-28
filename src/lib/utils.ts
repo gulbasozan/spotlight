@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function getPriorityNumber(
-    upperBoundary: number | undefined,
+    upperBoundary: number | null,
     lowerBoundary = 0,
 ) {
     if (!upperBoundary) return lowerBoundary + 1000;

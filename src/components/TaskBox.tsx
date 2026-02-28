@@ -32,7 +32,15 @@ import {
 import AddTaskDialog from "./AddTask";
 import AddSubtaskDialog from "./AddSubtask";
 
-const TaskBox = ({ task, index }: { task: Task; index: number }) => {
+const TaskBox = ({
+    task,
+    index,
+    isKingOfTasks,
+}: {
+    task: Task;
+    index: number;
+    isKingOfTasks: boolean;
+}) => {
     const { fetchTasks } = useTasksAPI();
 
     const handleDelete = () => {
@@ -70,6 +78,7 @@ const TaskBox = ({ task, index }: { task: Task; index: number }) => {
                             <AddTaskDialog
                                 taskPriority={task.priority}
                                 index={index}
+                                isKingOfTasks={isKingOfTasks}
                             />
                         </Dialog>
 

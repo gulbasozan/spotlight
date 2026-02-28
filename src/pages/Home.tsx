@@ -6,6 +6,9 @@ import { useNavigate } from "react-router";
 import AddTaskDialog from "../components/AddTask";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+
+const PRIORITY_SORT_START_ANCHOR = 1000;
+
 const Home = () => {
     const { tasks, loading, error } = useTasksAPI();
 
@@ -23,7 +26,12 @@ const Home = () => {
         <div className="flex w-full max-w-3xl p-5 flex-col justify-center items-center">
             {tasks.length > 0 ? (
                 tasks.map((task, index) => (
-                    <TaskBox key={task.id} index={index} task={task} />
+                    <TaskBox
+                        key={task.id}
+                        index={index}
+                        task={task}
+                        isKingOfTasks={index === 0}
+                    />
                 ))
             ) : (
                 <Dialog>
@@ -34,7 +42,10 @@ const Home = () => {
                                 <h2>Add a Task</h2>
                             </Button>
                         </DialogTrigger>
-                        <AddTaskDialog index={0} />
+                        <AddTaskDialog
+                            index={0}
+                            taskPriority={PRIORITY_SORT_START_ANCHOR}
+                        />
                     </div>
                 </Dialog>
             )}
