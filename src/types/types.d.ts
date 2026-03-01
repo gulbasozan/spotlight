@@ -4,6 +4,8 @@ declare interface Task {
     text: string;
     subtasks: Subtask[] | never[];
     priority: number;
+    completed: boolean;
+    completed_at: date;
 }
 
 declare interface Subtask {
@@ -12,6 +14,8 @@ declare interface Subtask {
     text: string;
     task_id: string;
     task_contexts: TaskContext[] | never[];
+    completed: boolean;
+    completed_at: date;
 }
 
 declare interface TaskContext {

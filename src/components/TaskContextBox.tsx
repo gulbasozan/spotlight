@@ -21,9 +21,10 @@ import {
 
 const TaskContextBox = ({
     taskContext,
+    isCompletedSubtask,
 }: {
-    taskID: string;
     taskContext: TaskContext;
+    isCompletedSubtask: boolean;
 }) => {
     const { fetchTasks } = useTasksAPI();
 
@@ -40,12 +41,15 @@ const TaskContextBox = ({
             <div className="ml-2 px-2">
                 <div className="flex flex-row justify-between items-center">
                     <DropdownMenuTrigger>
-                        <div className="flex flex-row gap-2 items-center justify-start">
-                            <CornerDownRight size={20} />
-                            <h1 className="font-light text-md">
-                                {taskContext.text}
-                            </h1>
-                        </div>
+                        {isCompletedSubtask ? (
+                            <CompletedSubtaskContext
+                                taskContextText={taskContext.text}
+                            />
+                        ) : (
+                            <UncompletedSubtaskContext
+                                taskContextText={taskContext.text}
+                            />
+                        )}
                     </DropdownMenuTrigger>
                 </div>
 
@@ -84,6 +88,34 @@ const TaskContextBox = ({
                 </DropdownMenuContent>
             </div>
         </DropdownMenu>
+    );
+};
+
+const UncompletedSubtaskContext = ({
+    taskContextText,
+}: {
+    taskContextText: TaskContext["text"];
+}) => {
+    return (
+        <div className="flex flex-row gap-2 items-center justify-start">
+            <CornerDownRight size={20} color="#d1d5dc" />
+            <h1 className="font-light text-md text-gray-300 line-through">
+                {taskContextText}
+            </h1>
+        </div>
+    );
+};
+
+const CompletedSubtaskContext = ({
+    taskContextText,
+}: {
+    taskContextText: TaskContext["text"];
+}) => {
+    return (
+        <div className="flex flex-row gap-2 items-center justify-start">
+            <CornerDownRight size={20} />
+            <h1 className="font-light text-md">{taskContextText}</h1>
+        </div>
     );
 };
 
