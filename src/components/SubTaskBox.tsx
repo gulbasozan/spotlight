@@ -35,12 +35,18 @@ import {
 import AddTaskContextDialog from "./AddTaskContext.tsx";
 import { toggleSubtaskCompleteStatus } from "@/api/toggle_subtask_complete_status.ts";
 
-const SubtaskBox = ({ subtask }: { subtask: Subtask }) => {
+const SubtaskBox = ({
+    subtask,
+    isTaskCompleted,
+}: {
+    subtask: Subtask;
+    isTaskCompleted: boolean;
+}) => {
     return (
         <DropdownMenu>
             <div className="ml-2 mr-2 p-2">
                 <DropdownMenuTrigger>
-                    {subtask.completed_at ? (
+                    {subtask.completed_at || isTaskCompleted ? (
                         <CompletedSubtask subtaskText={subtask.text} />
                     ) : (
                         <UncompletedSubtask subtaskText={subtask.text} />
@@ -58,7 +64,10 @@ const SubtaskBox = ({ subtask }: { subtask: Subtask }) => {
                                 <TaskContextBox
                                     key={taskContext.id}
                                     taskContext={taskContext}
-                                    isCompletedSubtask={!subtask.completed_at}
+                                    isCompletedSubtask={
+                                        !subtask.completed_at &&
+                                        !isTaskCompleted
+                                    }
                                 />
                             );
                         })}
