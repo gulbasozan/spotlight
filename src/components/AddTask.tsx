@@ -41,11 +41,10 @@ const AddTaskDialog = ({
         // lower priority has higher index bc order is ascending in priority
         const lowerTask = tasks.length > 1 ? tasks.at(index + 1) : null; // thus index+1
 
-        const upperBoundary =
-            !isKingOfTasks || !yieldThrone ? taskPriority : null;
+        const upperBoundary = !yieldThrone ? taskPriority : null;
         const newTaskPriority = getPriorityNumber(
             upperBoundary,
-            lowerTask?.priority,
+            yieldThrone ? taskPriority : lowerTask?.priority,
         );
 
         if (newTaskPriority === lowerTask?.priority)
