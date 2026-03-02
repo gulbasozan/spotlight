@@ -55,7 +55,7 @@ const TaskBox = ({
     isKingOfTasks: boolean;
 }) => {
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <div className="flex flex-col items-start justify-center w-full">
                 <div className="m-2 p-2 w-full">
                     <div className="flex flex-row justify-between items-center pb-2">

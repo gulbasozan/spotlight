@@ -37,7 +37,7 @@ const TaskContextBox = ({
             .catch((e) => console.log(e));
     };
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <div className="ml-2 px-2">
                 <div className="flex flex-row justify-between items-center">
                     <DropdownMenuTrigger>

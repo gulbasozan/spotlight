@@ -45,7 +45,7 @@ const SubtaskBox = ({
     isTaskCompleted: boolean;
 }) => {
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <div className="ml-4 mr-4 ">
                 <DropdownMenuTrigger>
                     {subtask.completed_at || isTaskCompleted ? (
