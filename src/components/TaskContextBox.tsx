@@ -18,6 +18,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { useState } from "react";
+import { Spinner } from "./ui/spinner";
 
 const TaskContextBox = ({
     taskContext,
@@ -26,15 +28,20 @@ const TaskContextBox = ({
     taskContext: TaskContext;
     isCompletedSubtask: boolean;
 }) => {
+    const [startDelete, setStartDelete] = useState(false);
     const { fetchTasks } = useTasksAPI();
 
-    const handleDelete = () => {
+    const handleDelete = (e) => {
+        e.preventDefault();
+
+        setStartDelete(true);
         deleteTaskContext(taskContext.id)
             .then((res) => {
                 if (res.error) throw res.error;
             })
             .then(() => fetchTasks())
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
+            .finally(() => setStartDelete(false));
     };
     return (
         <DropdownMenu modal={false}>
@@ -79,9 +86,22 @@ const TaskContextBox = ({
                                 <AlertDialogCancel variant="outline">
                                     Cancel
                                 </AlertDialogCancel>
-                                <AlertDialogAction onClick={handleDelete}>
-                                    Delete
-                                </AlertDialogAction>
+                                {startDelete ? (
+                                    <AlertDialogAction
+                                        disabled
+                                        variant="destructive"
+                                    >
+                                        Deleting{" "}
+                                        <Spinner data-icon="inline-start" />
+                                    </AlertDialogAction>
+                                ) : (
+                                    <AlertDialogAction
+                                        onClick={handleDelete}
+                                        variant="destructive"
+                                    >
+                                        Delete
+                                    </AlertDialogAction>
+                                )}
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>

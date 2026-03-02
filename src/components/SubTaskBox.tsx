@@ -36,6 +36,8 @@ import {
 import AddTaskContextDialog from "./AddTaskContext.tsx";
 import { toggleSubtaskCompleteStatus } from "@/api/toggle_subtask_complete_status.ts";
 import AddSubtaskDialog from "./AddSubtask.tsx";
+import { useState } from "react";
+import { Spinner } from "./ui/spinner.tsx";
 
 const SubtaskBox = ({
     subtask,
@@ -122,15 +124,20 @@ const SubtaskDropdownContent = ({
     taskID: Subtask["task_id"];
     isCompleted: boolean;
 }) => {
+    const [startDelete, setStartDelete] = useState(false);
     const { fetchTasks } = useTasksAPI();
 
-    const handleDelete = () => {
+    const handleDelete = (e) => {
+        e.preventDefault();
+
+        setStartDelete(true);
         deleteSubtask(subtaskID)
             .then((res) => {
                 if (res.error) throw res.error;
             })
             .then(() => fetchTasks())
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
+            .finally(() => setStartDelete(false));
     };
 
     const handleMarkAsComplete = () => {
@@ -207,9 +214,18 @@ const SubtaskDropdownContent = ({
                         <AlertDialogCancel variant="outline">
                             Cancel
                         </AlertDialogCancel>
-                        <AlertDialogAction onClick={handleDelete}>
-                            Delete
-                        </AlertDialogAction>
+                        {startDelete ? (
+                            <AlertDialogAction disabled variant="destructive">
+                                Deleting <Spinner data-icon="inline-start" />
+                            </AlertDialogAction>
+                        ) : (
+                            <AlertDialogAction
+                                onClick={handleDelete}
+                                variant="destructive"
+                            >
+                                Delete
+                            </AlertDialogAction>
+                        )}
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

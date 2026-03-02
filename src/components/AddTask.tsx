@@ -16,6 +16,7 @@ import { getPriorityNumber } from "@/lib/utils";
 import { Switch } from "./ui/switch";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { AlertCircleIcon } from "lucide-react";
+import { Spinner } from "./ui/spinner";
 
 const AddTaskDialog = ({
     taskPriority,
@@ -29,6 +30,7 @@ const AddTaskDialog = ({
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [yieldThrone, setYieldThrone] = useState(false);
     const [priorityLimitError, setPriorityLimitError] = useState(false);
+    const [startFetch, setStartFetch] = useState(false);
 
     const { fetchTasks, tasks } = useTasksAPI();
 
@@ -50,9 +52,11 @@ const AddTaskDialog = ({
         if (newTaskPriority === lowerTask?.priority)
             return setPriorityLimitError(true);
 
+        setStartFetch(true);
         addTask(e.target.taskName.value, newTaskPriority)
             .then(() => fetchTasks())
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
+            .finally(() => setStartFetch(false));
     };
 
     return (
@@ -84,9 +88,16 @@ const AddTaskDialog = ({
                             <DialogClose asChild>
                                 <Button variant="outline">Cancel</Button>
                             </DialogClose>
-                            <Button type="submit" disabled={buttonDisabled}>
-                                Add Task
-                            </Button>
+                            {startFetch ? (
+                                <Button disabled>
+                                    Adding Task
+                                    <Spinner data-icon="inline-start" />
+                                </Button>
+                            ) : (
+                                <Button type="submit" disabled={buttonDisabled}>
+                                    Add Task
+                                </Button>
+                            )}
                         </div>
                     </DialogFooter>
                 </Field>

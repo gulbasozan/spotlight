@@ -13,9 +13,11 @@ import { Field } from "./ui/field";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { Spinner } from "./ui/spinner";
 
 const AddSubtaskDialog = ({ taskID }: { taskID: string }) => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [startFetch, setStartFetch] = useState(false);
 
     const { fetchTasks } = useTasksAPI();
 
@@ -24,9 +26,11 @@ const AddSubtaskDialog = ({ taskID }: { taskID: string }) => {
 
         if (e.target.subtaskName.value === "") return;
 
+        setStartFetch(true);
         addSubtask(e.target.subtaskName.value, taskID)
             .then(() => fetchTasks())
-            .catch((e) => console.log(e));
+            .catch((e) => console.log(e))
+            .finally(() => setStartFetch(false));
     };
 
     return (
@@ -53,9 +57,16 @@ const AddSubtaskDialog = ({ taskID }: { taskID: string }) => {
                         <DialogClose asChild>
                             <Button variant="outline">Cancel</Button>
                         </DialogClose>
-                        <Button type="submit" disabled={buttonDisabled}>
-                            Add Subtask
-                        </Button>
+                        {startFetch ? (
+                            <Button disabled>
+                                Adding Subtask
+                                <Spinner data-icon="inline-start" />
+                            </Button>
+                        ) : (
+                            <Button type="submit" disabled={buttonDisabled}>
+                                Add Subtask
+                            </Button>
+                        )}
                     </DialogFooter>
                 </Field>
             </form>
