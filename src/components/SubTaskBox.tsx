@@ -69,8 +69,7 @@ const SubtaskBox = ({
                                     key={taskContext.id}
                                     taskContext={taskContext}
                                     isCompletedSubtask={
-                                        !subtask.completed_at &&
-                                        !isTaskCompleted
+                                        subtask.completed_at || isTaskCompleted
                                     }
                                 />
                             </div>

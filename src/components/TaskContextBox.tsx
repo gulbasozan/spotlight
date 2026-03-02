@@ -111,7 +111,7 @@ const TaskContextBox = ({
     );
 };
 
-const UncompletedSubtaskContext = ({
+const CompletedSubtaskContext = ({
     taskContextText,
 }: {
     taskContextText: TaskContext["text"];
@@ -119,14 +119,14 @@ const UncompletedSubtaskContext = ({
     return (
         <div className="flex flex-row gap-2 items-start justify-start">
             <CornerDownRight size={24} color="#d1d5dc" className="shrink-0" />
-            <h1 className="font-light text-md text-gray-300 line-through">
+            <h1 className="font-light text-md text-gray-300 line-through text-start">
                 {taskContextText}
             </h1>
         </div>
     );
 };
 
-const CompletedSubtaskContext = ({
+const UncompletedSubtaskContext = ({
     taskContextText,
 }: {
     taskContextText: TaskContext["text"];
