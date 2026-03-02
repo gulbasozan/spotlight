@@ -7,6 +7,7 @@ import {
     Minus,
     Plus,
     SquareMinus,
+    SquarePlus,
 } from "lucide-react";
 
 import TaskContextBox from "./TaskContextBox.tsx";
@@ -34,6 +35,7 @@ import {
 } from "./ui/alert-dialog.tsx";
 import AddTaskContextDialog from "./AddTaskContext.tsx";
 import { toggleSubtaskCompleteStatus } from "@/api/toggle_subtask_complete_status.ts";
+import AddSubtaskDialog from "./AddSubtask.tsx";
 
 const SubtaskBox = ({
     subtask,
@@ -159,6 +161,15 @@ const SubtaskDropdownContent = ({
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />
+
+            <Dialog>
+                <DialogTrigger asChild>
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        <SquarePlus /> Subtask
+                    </DropdownMenuItem>
+                </DialogTrigger>
+                <AddSubtaskDialog taskID={taskID} />
+            </Dialog>
 
             <Dialog>
                 <DialogTrigger asChild>

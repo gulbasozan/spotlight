@@ -179,15 +179,6 @@ const TaskDropdownMenuContent = ({
             <Dialog>
                 <DialogTrigger asChild>
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                        <SquarePlus /> Subtask
-                    </DropdownMenuItem>
-                </DialogTrigger>
-                <AddSubtaskDialog taskID={taskID} />
-            </Dialog>
-
-            <Dialog>
-                <DialogTrigger asChild>
-                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                         <CopyPlus /> Task Context
                     </DropdownMenuItem>
                 </DialogTrigger>
