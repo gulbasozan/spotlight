@@ -44,7 +44,7 @@ const SubtaskBox = ({
 }) => {
     return (
         <DropdownMenu>
-            <div className="ml-2 mr-2 p-2">
+            <div className="ml-4 mr-4 ">
                 <DropdownMenuTrigger>
                     {subtask.completed_at || isTaskCompleted ? (
                         <CompletedSubtask subtaskText={subtask.text} />
@@ -57,10 +57,10 @@ const SubtaskBox = ({
                     taskID={subtask.task_id}
                     isCompleted={subtask.completed_at}
                 />
-                <div className="flex flex-col gap-2 ml-2 p-2">
-                    {subtask.task_contexts.length > 0 &&
-                        subtask.task_contexts.map((taskContext) => {
-                            return (
+                {subtask.task_contexts.length > 0 &&
+                    subtask.task_contexts.map((taskContext) => {
+                        return (
+                            <div className="flex flex-col gap-2 ml-2 pr-2 pl-2">
                                 <TaskContextBox
                                     key={taskContext.id}
                                     taskContext={taskContext}
@@ -69,9 +69,9 @@ const SubtaskBox = ({
                                         !isTaskCompleted
                                     }
                                 />
-                            );
-                        })}
-                </div>
+                            </div>
+                        );
+                    })}
             </div>
         </DropdownMenu>
     );
@@ -84,9 +84,11 @@ const UncompletedSubtask = ({
 }) => {
     return (
         <div className="flex flex-row justify-between items-center">
-            <div className="flex flex-row gap-2 items-center justify-start">
-                <Minus size={20} />
-                <h1 className="font-medium text-lg">{subtaskText}</h1>
+            <div className="flex flex-row gap-2 items-start justify-start">
+                <Minus size={28} className="shrink-0" />
+                <h1 className="font-medium text-lg text-start">
+                    {subtaskText}
+                </h1>
             </div>
         </div>
     );
@@ -99,9 +101,9 @@ const CompletedSubtask = ({
 }) => {
     return (
         <div className="flex flex-row justify-between items-center">
-            <div className="flex flex-row gap-2 items-center justify-start">
-                <Plus size={20} color="#d1d5dc" />
-                <h1 className="font-medium text-lg text-gray-300 line-through">
+            <div className="flex flex-row gap-2 items-start justify-start">
+                <Plus size={28} color="#d1d5dc" className="shrink-0" />
+                <h1 className="font-medium text-lg text-gray-300 line-through text-start">
                     {subtaskText}
                 </h1>
             </div>

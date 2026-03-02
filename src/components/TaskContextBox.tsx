@@ -60,7 +60,7 @@ const TaskContextBox = ({
                                 variant="destructive"
                                 onSelect={(e) => e.preventDefault()}
                             >
-                                <SquareMinus /> Delete Subtask
+                                <SquareMinus /> Delete Context
                             </DropdownMenuItem>
                         </AlertDialogTrigger>
 
@@ -97,8 +97,8 @@ const UncompletedSubtaskContext = ({
     taskContextText: TaskContext["text"];
 }) => {
     return (
-        <div className="flex flex-row gap-2 items-center justify-start">
-            <CornerDownRight size={20} color="#d1d5dc" />
+        <div className="flex flex-row gap-2 items-start justify-start">
+            <CornerDownRight size={24} color="#d1d5dc" className="shrink-0" />
             <h1 className="font-light text-md text-gray-300 line-through">
                 {taskContextText}
             </h1>
@@ -112,9 +112,9 @@ const CompletedSubtaskContext = ({
     taskContextText: TaskContext["text"];
 }) => {
     return (
-        <div className="flex flex-row gap-2 items-center justify-start">
-            <CornerDownRight size={20} />
-            <h1 className="font-light text-md">{taskContextText}</h1>
+        <div className="flex flex-row gap-2 items-start justify-start">
+            <CornerDownRight size={24} className="shrink-0" />
+            <h1 className="font-light text-md text-start">{taskContextText}</h1>
         </div>
     );
 };

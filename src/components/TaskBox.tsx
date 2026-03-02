@@ -58,7 +58,7 @@ const TaskBox = ({
         <DropdownMenu>
             <div className="flex flex-col items-start justify-center w-full">
                 <div className="m-2 p-2 w-full">
-                    <div className="flex flex-row justify-between items-center">
+                    <div className="flex flex-row justify-between items-center pb-2">
                         <DropdownMenuTrigger>
                             {task.completed_at ? (
                                 <CompletedTask TaskText={task.text} />
@@ -92,18 +92,18 @@ const TaskBox = ({
 
 const UncompletedTask = ({ TaskText }: { TaskText: Task["text"] }) => {
     return (
-        <div className="flex flex-row gap-2 items-center justify-start">
-            <Square size={20} />
-            <h1 className="font-bold text-2xl">{TaskText}</h1>
+        <div className="flex flex-row gap-2 items-start justify-start">
+            <Square size={32} className="shrink-0" />
+            <h1 className="font-bold text-2xl text-start">{TaskText}</h1>
         </div>
     );
 };
 
 const CompletedTask = ({ TaskText }: { TaskText: Task["text"] }) => {
     return (
-        <div className="flex flex-row gap-2 items-center justify-start">
-            <SquareCheckBig size={20} color="#d1d5dc" />
-            <h1 className="font-bold text-2xl text-gray-300 line-through">
+        <div className="flex flex-row gap-2 items-start justify-start">
+            <SquareCheckBig size={32} color="#d1d5dc" className="shrink-0" />
+            <h1 className="font-bold text-2xl text-gray-300 line-through text-start">
                 {TaskText}
             </h1>
         </div>
