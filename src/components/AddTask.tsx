@@ -39,9 +39,14 @@ const AddTaskDialog = ({
 
         if (e.target.taskName.value === "") return;
 
+        const prioritySortedTasks = tasks.sort(
+            (a, b) => b.priority - a.priority,
+        );
+
         // get upper (taskPriority) and lower tasks for priority boundaries
         // lower priority has higher index bc order is ascending in priority
-        const lowerTask = tasks.length > 1 ? tasks.at(index + 1) : null; // thus index+1
+        const lowerTask =
+            tasks.length > 1 ? prioritySortedTasks.at(index + 1) : null; // thus index+1
 
         const upperBoundary = !yieldThrone ? taskPriority : null;
         const newTaskPriority = getPriorityNumber(
